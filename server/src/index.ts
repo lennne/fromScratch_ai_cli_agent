@@ -16,7 +16,7 @@ const port = process.env.PORT;
 //and we need credentials when we're accessing the server
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
@@ -29,6 +29,9 @@ app.all('/api/auth/*splat', toNodeHandler(auth))
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    console.log("request", req.method, " ", req.url)
+})
 
 // API ROUTES
 app.get('/health', (req, res) => {
