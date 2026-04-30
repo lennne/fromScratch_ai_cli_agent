@@ -29,10 +29,6 @@ app.all('/api/auth/*splat', toNodeHandler(auth))
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-    console.log("request", req.method, " ", req.url)
-})
-
 // API ROUTES
 app.get('/health', (req, res) => {
     res.send("OK");

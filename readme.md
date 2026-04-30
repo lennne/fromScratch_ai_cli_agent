@@ -51,7 +51,7 @@ PostgreSQL Database - Neon DB(Serverless)
         2. in the `(auth)` add a layout file - ![[layout.tsx]](./client/orbital-cli/app/(auth)/sign-in/layout.tsx)
         2. update ![[layout.tsx]](./client/orbital-cli/app/(auth)/sign-in/layout.tsx) to render only children but center everything and set it to h-screen to only apply the full viewport height to the specific element it is attached to;
         2. inside ![[sign-in]](./client/orbital-cli/app/(auth)/sign-in) create a new file ![[page.tsx]](./client/orbital-cli/app/(auth)/sign-in/page.tsx)
-5. implement authclient in nextjs
+5. implement authclient in nextjs - #complete
     1. inside the login form import the `authclient`
     2. Setup dark mode - use shadcn - follow the docs
     3. Inside the ![[main app page]](./client/orbital-cli/app/page.tsx), we are going to display the currently logged in user
@@ -82,3 +82,35 @@ PostgreSQL Database - Neon DB(Serverless)
     2. make sure that cors has been setup on the backend server so that it allows the client app(nextjs) to talk with it, if not the connection will be refused on the browser(throwing a cors policy error) and the server
     3. make sure you've configured the correct callback in the ![[login-form]](./client/orbital-cli/components/Login/login-form.tsx) for better-auth cause that is what tells github that after all the authentication process return to the client app(nextjs)
 6. Completion - add some checks to make sure you executed the above correctly
+
+# Chapter 4 - Implemement Device Flow
+What is device Flow and ?
+Device flow(OAuth 2.0 Device Authorization Grant) is an authentication method used by apps that that simply do not have browser or ui available(limited input capabilities), unable to easily handle traditional browser-based login. Examples are CLI tools, TVs, gaming consoles, IoT devices etc.
+
+why we use device flow?
+traditional OAuth flow uses the browser since this is impractical for some devices, device flow splits authentication across two devices, one with limited capabilities example(tv, cli) and then noe with full capabilities(phone, laptop)
+
+1. Follow the better-auth for device authorization(device flow)
+2. After you copy and paste the client plugin.
+    2. execute `npx auth generate` and then
+    2. `npx prisma migrate dev`
+3. install the following
+    3. commander
+    3. boxen
+    3. chalk
+    3. yocto-spinner
+    3. @clack/prompts
+    3. figlet
+4. inside the lib folder, create another folder called cli
+    4. inside cli, create main.js and a commands folder
+    4. inside main.js paste the following text `#!/usr/bin/env node` at the top of the file
+5. Inside the [[main.js]](./server/src/lib/cli/main.js) file we're going to setup our console UI.
+    5. we'll need to test implementation by setting up a banner in the console
+    5. we began by creating a main function
+        5. inside this function we are `console logging` another function.(in other words, we're passing another function inside the `console.log(another_function)`)
+        5. the function that we pass inside is the `chalk.cyan()` function. (let's agree that since we know anything ending with `()` is a function we don't need to repeat function from now on.)
+        5. and then inside `chalk.cyan()` we pass the object with it's parameters, in this case `{font, horizontalLayout}`
+        5. add a new `command` named `orbital`, with a `description` and `version`.
+        5. in the terminal type `chmod +x ./main.js` to make the main.js file executable
+        5. go to package.json in the server folder and add `"bin": {"orbital": "./src/cli/main.js"}`
+        5. now yoou can run the command `npm link` in the terminal

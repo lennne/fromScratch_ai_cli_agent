@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -43,7 +44,7 @@ export default function Home() {
         {/* Avatar */}
         <div className = "flex justify-center mb-6">
         <div className="relative">
-        <img 
+        <Image
         src={data?.user?.image || "/vercel.svg"} 
         alt={data?.user?.name || "User"}
         height={120} width={120}
