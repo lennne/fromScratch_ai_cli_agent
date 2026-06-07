@@ -164,6 +164,6 @@ traditional OAuth flow uses the browser since this is impractical for some devic
 		 4. To register the `login` command we simply open the file [[main.js]](/server/src/cli/main.js) and navigate to `program.version()` and chain the command `addCommand(login)` having passed in [[login]](/server/src/cli/commands/auth/login.ts)
 			 1. To [[#^a4ebaf|turn it into an executable command ]]
 	 3. **Issues faced and changes**: 
-		 1. **debbugging ** 
+		 1. **[[debugs.md#^579408|debbugging]]** 
 		 2. 
 7. 

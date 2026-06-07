@@ -39,7 +39,7 @@ async function main(){
         
     program.action(() => {
         program.help();
-    });
+     });
 
     program.parse(); 
 }

@@ -7,6 +7,10 @@ import os from "os";
 import path from "path";
 import * as z from "zod/v4";
 import dotenv from "dotenv";
+import { createAuthClient } from "better-auth/client";
+import { deviceAuthorizationClient } from "better-auth/client/plugins";
+import yoctoSpinner from "yocto-spinner";
+import { logger } from "better-auth";
 
 dotenv.config();
 
@@ -34,8 +38,8 @@ export async function loginAction(opts: LoginOptions){
     // display an intro
     intro(chalk.bold("🔐Auth CLI Login"))
 
-    const tokenExists = true;
-    const tokenExpired = true;
+    const tokenExists = false;
+    const tokenExpired = false;
 
     if(tokenExists && !tokenExpired){
         const shouldReAuth = await confirm({
@@ -45,8 +49,62 @@ export async function loginAction(opts: LoginOptions){
 
         if(isCancel(shouldReAuth) || !shouldReAuth){
             cancel("Login Cancelled");
-            process.exit(0);
+            process.exit(0); 
         }
+    }
+
+    const authClient = createAuthClient({
+        baseURL: serverUrl,
+        plugins: [deviceAuthorizationClient()]
+    })
+
+    const spinner = yoctoSpinner({text: "Requesting device authorization..."});
+    spinner.start();
+
+    // Request a code
+    try {
+        const { data, error } = await authClient.device.code({
+            client_id: clientId || "",
+            scope: "openId profile email"
+        })
+
+        spinner.stop();
+
+        if(error || !data){
+            logger.error(`Failed to request device authorization: `, error)
+
+            process.exit(1);
+        }
+
+        const {
+            device_code,
+            user_code,
+            verification_uri,
+            verification_uri_complete,
+            interval = 5,
+            expires_in
+        } = data;
+
+        console.log(chalk.cyan("Device Authorization Required"));
+
+        console.log(`Please visit "${chalk.underline.blue( verification_uri || verification_uri_complete)}`)
+
+        console.log(`Enter Code: ${chalk.bold.green(user_code)}`)
+
+        const shouldOpen = await confirm({
+            message: "Open browser automatically",
+            initialValue: true
+        })
+
+        if(!isCancel(shouldOpen) && shouldOpen){
+            const urlToOpen = verification_uri || verification_uri_complete;
+        }
+
+        console.log(chalk.gray(`Waiting for authorization ( expires in ${Math.floor(
+            expires_in /60)} minutes)...`)
+        )
+    } catch (error) {
+        
     }
 
 }
