@@ -145,7 +145,7 @@ export async function loginAction(opts: LoginOptions) {
             console.log(chalk.gray(`\n Token saved to: ${TOKEN_FILE}`))
 
             console.log(
-                chalk.gray("You can now usse AI commands without logging in again.\n")
+                chalk.gray("You can now use AI commands without logging in again.\n")
             )
         }
 
