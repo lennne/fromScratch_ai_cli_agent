@@ -45,6 +45,12 @@ app.get("/api/me", async(req, res) => {
     return res.json(session);
 })
 
+app.get("/device", (req, res) => {
+    const { user_code } = req.query;
+
+    return res.redirect(`http://localhost:3000/device?user_code=${user_code}`);
+});
+
 
 app.listen(port, () => {
     console.log("Your application is running on port", port)

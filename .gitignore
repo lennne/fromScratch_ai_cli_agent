@@ -5,3 +5,4 @@
 **.log
 .obsidian
 docs
+**.env

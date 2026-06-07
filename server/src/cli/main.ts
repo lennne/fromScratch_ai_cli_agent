@@ -6,6 +6,7 @@ import figlet from "figlet";
 
 import {Command} from "commander";
 import {login} from "./commands/auth/login";
+import { wakeUp } from "./commands/ai/wakeUp";
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ async function main(){
     program.version("0.0.1")
         .description("Orbital CLI - A Cli Based AI Tool")
         .addCommand(login);
+        // .addCommand(logout);
+        // .addCommand(wakeUp);
         
     program.action(() => {
         program.help();
