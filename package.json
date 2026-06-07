@@ -1,0 +1,22 @@
+{
+  "name": "fromscratch_ai_cli_agent",
+  "version": "1.0.0",
+  "description": "Next.js Authentication microservices express zod commandjs",
+  "homepage": "https://github.com/lennne/fromScratch_ai_cli_agent#readme",
+  "bugs": {
+    "url": "https://github.com/lennne/fromScratch_ai_cli_agent/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lennne/fromScratch_ai_cli_agent.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "npm run dev --prefix ./client",
+    "dev:cli": "npm run dev --prefix ./server",
+    "dev": "concurrently \"npm:dev:cli\" \"npm:dev:client\""
+  }
+}

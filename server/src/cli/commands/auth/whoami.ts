@@ -28,6 +28,10 @@ export async function whoamiAction() {
             },
         });
 
+        if (!user) {
+            console.log(chalk.red("❌ Active database session profile data could not be recovered. Please execute 'orbital login'."));
+            return process.exit(1);
+        }
 
         // Output user session info
         console.log(
