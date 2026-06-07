@@ -16,7 +16,7 @@ export async function getStoredToken(){
 export async function storeToken(token: AuthToken){
     try {
         
-        // Ensure conofig directory exists
+        // Ensure config directory exists
         await fs.mkdir(CONFIG_DIR, { recursive: true });
 
 
@@ -54,7 +54,7 @@ export async function clearStoredToken(){
 export async function isTokenExpired(){
     const token = await getStoredToken();
     
-    if (!token || token.expires_at){
+    if (!token || !token.expires_at){
         return true
     }
 
@@ -77,7 +77,7 @@ export async function requireAuth(){
         process.exit(1);
     }
 
-    if ( await isTokenExpired ){
+    if ( await isTokenExpired() ){
         console.log(
             chalk.yellow("⚠️ Your session has expired. Please login again")
         );
