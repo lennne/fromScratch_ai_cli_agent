@@ -1,3 +1,6 @@
+## Overview
+NexusCLI is a full-stack AI-powered developer workflow platform featuring a conversational CLI agent and web dashboard. It enables secure, structured interaction with LLMs to automate internal development tasks through command-based execution and contextual AI reasoning.
+
 ## Technologies
 
 ### Frontend
